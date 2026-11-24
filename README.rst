@@ -76,10 +76,15 @@ API offers works.
 Docker
 ~~~~~~
 
+Multi-arch images (amd64, arm64) are published to GitHub Container Registry:
+
 .. code:: sh
 
-   docker build -t llm-spendcap .
-   docker run -p 8787:8787 -v $PWD:/config -e OPENAI_API_KEY llm-spendcap
+   docker run -d -p 8787:8787 -v $PWD:/config \
+     -e OPENAI_API_KEY -e ANTHROPIC_API_KEY -e OPENROUTER_API_KEY \
+     ghcr.io/krish31595/llm-spendcap:latest
+
+Put ``spendcap.toml`` in the current directory and set ``db = "/config/spendcap.db"`` so usage survives restarts.
 
 Configuration
 -------------
