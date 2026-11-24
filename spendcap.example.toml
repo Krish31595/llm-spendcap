@@ -1,0 +1,44 @@
+# llm-spendcap configuration
+
+[server]
+host = "127.0.0.1"   # use "0.0.0.0" to serve your LAN / team
+port = 8787
+db = "spendcap.db"
+block_unpriced = true  # refuse models with no price below (OpenRouter reports its own cost)
+
+# Real provider keys come from environment variables and never leave this machine.
+[providers.openai]
+base_url = "https://api.openai.com"
+api_key_env = "OPENAI_API_KEY"
+
+[providers.anthropic]
+base_url = "https://api.anthropic.com"
+api_key_env = "ANTHROPIC_API_KEY"
+auth = "x-api-key"
+
+[providers.openrouter]
+base_url = "https://openrouter.ai/api"
+api_key_env = "OPENROUTER_API_KEY"
+
+# Keys you hand out. Each gets its own budget.
+[[keys]]
+key = "cap-frontend-7f3a9c"
+name = "frontend"
+budget_usd = 5.00
+period = "day"          # day | month | total  (UTC)
+models = ["gpt-4o-mini", "claude-haiku-*"]   # optional allow-list (globs)
+
+[[keys]]
+key = "cap-research-b81e44"
+name = "research"
+budget_usd = 50.00
+period = "month"
+providers = ["openrouter"]
+
+# USD per 1M tokens: [input, output]. EXAMPLE VALUES: check your provider's
+# current pricing page and update these before relying on the caps.
+[prices]
+"gpt-4o-mini" = [0.15, 0.60]
+"gpt-4o" = [2.50, 10.00]
+"claude-haiku-*" = [1.00, 5.00]
+"claude-sonnet-*" = [3.00, 15.00]

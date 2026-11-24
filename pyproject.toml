@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-spendcap"
+dynamic = ["version"]
+description = "Hard budgets for OpenAI, Anthropic and OpenRouter API keys: a drop-in proxy that stops spending at your limit."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Krish31595" }]
+requires-python = ">=3.9"
+dependencies = ["fastapi>=0.110", "uvicorn>=0.27", "httpx>=0.27", "tomli>=2; python_version<'3.11'"]
+keywords = ["llm", "openai", "anthropic", "openrouter", "budget", "proxy", "cost", "rate-limit"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Internet :: Proxy Servers",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+spendcap = "spendcap.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Krish31595/llm-spendcap"
+
+[tool.setuptools.dynamic]
+version = { attr = "spendcap.__version__" }
+
+[tool.setuptools]
+packages = ["spendcap"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
