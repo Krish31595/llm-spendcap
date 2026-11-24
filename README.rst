@@ -1,7 +1,14 @@
-llm-spendcap
-============
+llm-spendcap: spending limits for OpenAI, Anthropic and OpenRouter API keys
+============================================================================
 
-**Hard budgets for your LLM API keys.** A drop-in proxy for OpenAI,
+.. image:: https://github.com/Krish31595/llm-spendcap/actions/workflows/test.yml/badge.svg
+   :target: https://github.com/Krish31595/llm-spendcap/actions
+.. image:: https://img.shields.io/github/stars/Krish31595/llm-spendcap?style=social
+   :target: https://github.com/Krish31595/llm-spendcap
+.. image:: https://img.shields.io/badge/license-MIT-green
+   :target: LICENSE
+
+**Hard budgets and cost control for your LLM API keys.** A drop-in proxy for OpenAI,
 Anthropic and OpenRouter that gives every app, teammate or student their
 own key with a daily or monthly dollar limit, and refuses requests once
 it's spent. Your real provider keys never leave the server.
@@ -133,6 +140,30 @@ How accurate is it?
    reads are actually cheaper, so this errs on the safe side).
 -  Requests the provider rejects (4xx/5xx) cost nothing and aren't
    recorded.
+
+FAQ
+---
+
+How do I set a spending limit on my OpenAI API key?
+   OpenAI's own limits apply to the whole account. Put llm-spendcap in front of the API, give each
+   app or person a spendcap key with ``budget_usd`` and ``period = "day"`` or ``"month"``, and
+   requests are refused with a clear error once that key's budget is used.
+
+How do I stop a runaway AI agent from burning my API credits?
+   Give the agent its own spendcap key with a small daily budget. When an agent loop goes wrong,
+   it hits the cap and stops instead of running all night.
+
+Can I share one OpenAI or Anthropic key with my team safely?
+   Yes. The real key stays on the server; each teammate gets their own spendcap key with its own
+   budget, model allow-list and usage report, and you can see who spent what.
+
+Does it work with the OpenAI Python SDK, LangChain, LlamaIndex and Cursor?
+   Anything that lets you set a base URL and API key works: point it at
+   ``http://<host>:8787/openai/v1`` (or ``/anthropic``, ``/openrouter/v1``).
+
+Is it an alternative to LiteLLM or an AI gateway?
+   It does one job: budgets. It is a single small package with a config file and no database
+   server, for when a full AI gateway is more than you need.
 
 Security
 --------

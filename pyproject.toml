@@ -11,7 +11,7 @@ license = { text = "MIT" }
 authors = [{ name = "Krish31595" }]
 requires-python = ">=3.10"
 dependencies = ["fastapi>=0.110", "uvicorn>=0.27", "httpx>=0.27", "tomli>=2; python_version<'3.11'"]
-keywords = ["llm", "openai", "anthropic", "openrouter", "budget", "proxy", "cost", "rate-limit"]
+keywords = ["llm", "openai", "anthropic", "openrouter", "claude", "budget", "spending-limit", "cost-control", "api-proxy", "ai-gateway", "llmops", "rate-limit", "token-usage"]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
